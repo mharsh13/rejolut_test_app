@@ -41,36 +41,30 @@ class _PhotosViewState extends State<PhotosView> {
             child: GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
+                mainAxisSpacing: 10,
+                crossAxisSpacing: 10,
               ),
               physics: AlwaysScrollableScrollPhysics(),
               itemCount: photosList!.length,
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () {},
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: Container(
-                      child: Image.network(
-                        photosList![index].thumbnail,
-                        loadingBuilder: (context, child, loadingProgress) {
-                          if (loadingProgress == null) return child;
-                          return Center(
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 75),
-                              child: CircularProgressIndicator(
-                                backgroundColor: theme.accentColor,
-                                value: loadingProgress.expectedTotalBytes !=
-                                        null
-                                    ? loadingProgress.cumulativeBytesLoaded /
-                                        num.parse(loadingProgress
-                                            .expectedTotalBytes
-                                            .toString())
-                                    : null,
-                              ),
-                            ),
-                          );
-                        },
-                      ),
+                  child: Container(
+                    child: Image.network(
+                      photosList![index].thumbnail,
+                      loadingBuilder: (context, child, loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Center(
+                          child: CircularProgressIndicator(
+                            color: theme.accentColor,
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                    num.parse(loadingProgress.expectedTotalBytes
+                                        .toString())
+                                : null,
+                          ),
+                        );
+                      },
                     ),
                   ),
                 );
