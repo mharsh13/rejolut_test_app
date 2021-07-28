@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'Providers/UserIdProvider.dart';
+import 'Providers/UserProvider.dart';
 import 'Screens/Auth/ui/LoginScreen.dart';
 import 'Core/Theme/Theme.dart';
 
@@ -10,6 +11,9 @@ void main() {
       providers: [
         ChangeNotifierProvider(
           create: (_) => UserIdProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => UserProvider(),
         ),
       ],
       child: MyApp(),
