@@ -37,7 +37,7 @@ class _AuthFormState extends State<AuthForm> {
             child: TextFormField(
               controller: _emailController,
               validator: (value) {
-                if (!value!.endsWith("@rejolut.com")) {
+                if (!value!.endsWith("@rejolut.com") || value.length < 13) {
                   return "Enter a valid email address";
                 } else {
                   return null;
