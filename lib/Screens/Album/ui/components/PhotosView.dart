@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
 import 'package:rejolut_test_app/Models/PhotoModel.dart';
 import 'package:rejolut_test_app/Providers/AlbumIdProvider.dart';
@@ -16,7 +15,7 @@ class PhotosView extends StatefulWidget {
 
 class _PhotosViewState extends State<PhotosView> {
   late int albumId;
-  List<PhotoModel> photosList = [];
+  List<PhotoModel>? photosList;
 
   @override
   void initState() {
@@ -30,29 +29,53 @@ class _PhotosViewState extends State<PhotosView> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
-      child: StaggeredGridView.countBuilder(
-        physics: AlwaysScrollableScrollPhysics(),
-        crossAxisCount: 4,
-        itemCount: photosList.length,
-        itemBuilder: (context, index) {
-          return GestureDetector(
-            onTap: () {},
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: Container(
-                child: Image.network(
-                  photosList[index].thumbnail,
-                ),
+    final theme = Theme.of(context);
+    return photosList == null
+        ? Center(
+            child: CircularProgressIndicator(
+              color: theme.accentColor,
+            ),
+          )
+        : Container(
+            margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
+            child: GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
               ),
+              physics: AlwaysScrollableScrollPhysics(),
+              itemCount: photosList!.length,
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: () {},
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Container(
+                      child: Image.network(
+                        photosList![index].thumbnail,
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return Center(
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 75),
+                              child: CircularProgressIndicator(
+                                backgroundColor: theme.accentColor,
+                                value: loadingProgress.expectedTotalBytes !=
+                                        null
+                                    ? loadingProgress.cumulativeBytesLoaded /
+                                        num.parse(loadingProgress
+                                            .expectedTotalBytes
+                                            .toString())
+                                    : null,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                );
+              },
             ),
           );
-        },
-        staggeredTileBuilder: (index) => StaggeredTile.fit(2),
-        mainAxisSpacing: 10,
-        crossAxisSpacing: 10,
-      ),
-    );
   }
 }
