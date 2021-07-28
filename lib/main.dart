@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:rejolut_test_app/Providers/AlbumIdProvider.dart';
 import 'Providers/UserIdProvider.dart';
 import 'Providers/UserProvider.dart';
 import 'Screens/Auth/ui/LoginScreen.dart';
@@ -14,6 +15,9 @@ void main() {
         ),
         ChangeNotifierProvider(
           create: (_) => UserProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => AlbumIdProvider(),
         ),
       ],
       child: MyApp(),
