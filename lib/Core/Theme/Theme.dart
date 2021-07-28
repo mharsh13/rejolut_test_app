@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:rejolut_test_app/Core/Theme/constants.dart';
+import '../constants.dart';
 
 ThemeData buildThemeData() {
   return ThemeData(
