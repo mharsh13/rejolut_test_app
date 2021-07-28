@@ -1,9 +1,9 @@
-import 'package:rejolut_test_app/Core/constants.dart';
+import '/Core/constants.dart';
 
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
-import 'package:rejolut_test_app/Models/PhotoModel.dart';
+import '/Models/PhotoModel.dart';
 
 class FetchData {
   List<PhotoModel> photosList = [];

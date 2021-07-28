@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:rejolut_test_app/Core/constants.dart';
-import 'package:rejolut_test_app/Providers/UserIdProvider.dart';
-import 'package:rejolut_test_app/Screens/Home/ui/HomeScreen.dart';
+import '/Core/constants.dart';
+import '/Providers/UserIdProvider.dart';
+import '/Screens/Home/ui/HomeScreen.dart';
 
 class AuthForm extends StatefulWidget {
   AuthForm({

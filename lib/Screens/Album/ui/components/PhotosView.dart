@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:rejolut_test_app/Models/PhotoModel.dart';
-import 'package:rejolut_test_app/Providers/AlbumIdProvider.dart';
-import 'package:rejolut_test_app/Screens/Album/backend/fetchData.dart';
+import '/Models/PhotoModel.dart';
+import '/Providers/AlbumIdProvider.dart';
+import '/Screens/Album/backend/fetchData.dart';
+
+import 'ImageView.dart';
 
 class PhotosView extends StatefulWidget {
   const PhotosView({
@@ -38,34 +42,38 @@ class _PhotosViewState extends State<PhotosView> {
           )
         : Container(
             margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
-            child: GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 10,
-                crossAxisSpacing: 10,
-              ),
+            child: StaggeredGridView.countBuilder(
+              staggeredTileBuilder: (index) => StaggeredTile.fit(2),
+              mainAxisSpacing: 10,
+              crossAxisSpacing: 10,
+              crossAxisCount: 4,
               physics: AlwaysScrollableScrollPhysics(),
               itemCount: photosList!.length,
               itemBuilder: (context, index) {
                 return GestureDetector(
-                  onTap: () {},
-                  child: Container(
-                    child: Image.network(
-                      photosList![index].thumbnail,
-                      loadingBuilder: (context, child, loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return Center(
-                          child: CircularProgressIndicator(
-                            color: theme.accentColor,
-                            value: loadingProgress.expectedTotalBytes != null
-                                ? loadingProgress.cumulativeBytesLoaded /
-                                    num.parse(loadingProgress.expectedTotalBytes
-                                        .toString())
-                                : null,
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => ImageView(
+                          photoUrl: photosList![index].url, theme: theme),
+                    );
+                  },
+                  child: Column(
+                    children: [
+                      ImageView(
+                        photoUrl: photosList![index].thumbnail,
+                        theme: theme,
+                      ),
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        child: Text(
+                          photosList![index].title,
+                          style: GoogleFonts.poppins(
+                            color: Colors.black87,
                           ),
-                        );
-                      },
-                    ),
+                        ),
+                      )
+                    ],
                   ),
                 );
               },

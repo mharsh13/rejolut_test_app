@@ -1,7 +1,7 @@
 import 'package:provider/provider.dart';
-import 'package:rejolut_test_app/Core/constants.dart';
-import 'package:rejolut_test_app/Models/AlbumModel.dart';
-import 'package:rejolut_test_app/Models/UserModel.dart';
+import '/Core/constants.dart';
+import '/Models/AlbumModel.dart';
+import '/Models/UserModel.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 

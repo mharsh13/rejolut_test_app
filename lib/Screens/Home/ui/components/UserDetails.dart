@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:provider/provider.dart';
-import 'package:rejolut_test_app/Models/UserModel.dart';
-import 'package:rejolut_test_app/Providers/UserIdProvider.dart';
+import '/Models/UserModel.dart';
+import '/Providers/UserIdProvider.dart';
 
-import 'package:rejolut_test_app/Screens/Home/backend/fetchData.dart';
+import '/Screens/Home/backend/fetchData.dart';
 
 class UserDetails extends StatefulWidget {
   const UserDetails({

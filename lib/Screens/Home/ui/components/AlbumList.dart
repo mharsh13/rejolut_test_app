@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:rejolut_test_app/Models/AlbumModel.dart';
-import 'package:rejolut_test_app/Providers/AlbumIdProvider.dart';
-import 'package:rejolut_test_app/Providers/UserIdProvider.dart';
-import 'package:rejolut_test_app/Screens/Album/ui/AlbumScreen.dart';
-import 'package:rejolut_test_app/Screens/Home/backend/fetchData.dart';
+import '/Models/AlbumModel.dart';
+import '/Providers/AlbumIdProvider.dart';
+import '/Providers/UserIdProvider.dart';
+import '/Screens/Album/ui/AlbumScreen.dart';
+import '/Screens/Home/backend/fetchData.dart';
 
 class AlbumList extends StatefulWidget {
   const AlbumList({
