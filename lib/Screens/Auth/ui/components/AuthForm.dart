@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:rejolut_test_app/Core/constants.dart';
+import 'package:rejolut_test_app/Providers/UserIdProvider.dart';
 
 class AuthForm extends StatefulWidget {
   AuthForm({
@@ -97,7 +99,7 @@ class _AuthFormState extends State<AuthForm> {
                   0,
                   _emailController.text.indexOf("@"),
                 )).length;
-                print(userId);
+                Provider.of<UserIdProvider>(context).setUserId(userId);
               }
             },
             child: Container(

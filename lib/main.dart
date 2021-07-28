@@ -1,9 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:rejolut_test_app/Screens/Auth/ui/LoginScreen.dart';
+import 'package:provider/provider.dart';
+import 'Providers/UserIdProvider.dart';
+import 'Screens/Auth/ui/LoginScreen.dart';
 import 'Core/Theme/Theme.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => UserIdProvider(),
+        ),
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
