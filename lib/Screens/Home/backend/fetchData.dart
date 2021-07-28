@@ -8,7 +8,8 @@ import 'dart:convert' as convert;
 import 'package:rejolut_test_app/Providers/UserProvider.dart';
 
 class FetchData {
-  late UserModel user;
+  late UserModel user =
+      UserModel(name: "404 Not found!", userId: "", username: "404 Not found!");
   late List<AlbumModel> albumList = [];
   Future<UserModel> fetchUser(int userId, context) async {
     var url = Uri.parse('$api' + "users/$userId");

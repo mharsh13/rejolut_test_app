@@ -46,53 +46,58 @@ class _AlbumListState extends State<AlbumList> {
                 color: theme.accentColor,
               ),
             )
-          : ListView.builder(
-              itemBuilder: (context, index) => GestureDetector(
-                onTap: () {
-                  Provider.of<AlbumIdProvider>(context, listen: false)
-                      .setAlbumId(int.parse(albumList![index].id));
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => AlbumScreen(),
-                    ),
-                  );
-                },
-                child: Card(
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                    width: widget.width,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          "#${index + 1} ",
-                          style: GoogleFonts.montserrat(
-                            color: Colors.black87,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                          ),
+          : albumList!.isEmpty
+              ? Center(
+                  child: Text("Error 404 - User Not Found"),
+                )
+              : ListView.builder(
+                  itemBuilder: (context, index) => GestureDetector(
+                    onTap: () {
+                      Provider.of<AlbumIdProvider>(context, listen: false)
+                          .setAlbumId(int.parse(albumList![index].id));
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => AlbumScreen(),
                         ),
-                        SizedBox(
-                          width: widget.width * 0.02,
-                        ),
-                        Container(
-                          width: widget.width * 0.7,
-                          child: Text(
-                            "${albumList![index].title}",
-                            style: GoogleFonts.montserrat(
-                              color: Colors.black54,
-                              fontSize: 16,
+                      );
+                    },
+                    child: Card(
+                      child: Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                        width: widget.width,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              "#${index + 1} ",
+                              style: GoogleFonts.montserrat(
+                                color: Colors.black87,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
-                          ),
+                            SizedBox(
+                              width: widget.width * 0.02,
+                            ),
+                            Container(
+                              width: widget.width * 0.7,
+                              child: Text(
+                                "${albumList![index].title}",
+                                style: GoogleFonts.montserrat(
+                                  color: Colors.black54,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
                   ),
+                  itemCount: albumList!.length,
                 ),
-              ),
-              itemCount: albumList!.length,
-            ),
     );
   }
 }
