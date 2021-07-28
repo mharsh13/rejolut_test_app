@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:rejolut_test_app/Core/constants.dart';
 
-class AuthForm extends StatelessWidget {
-  const AuthForm({
+class AuthForm extends StatefulWidget {
+  AuthForm({
     Key? key,
     required this.theme,
     required this.height,
@@ -14,74 +15,117 @@ class AuthForm extends StatelessWidget {
   final double width;
 
   @override
+  _AuthFormState createState() => _AuthFormState();
+}
+
+class _AuthFormState extends State<AuthForm> {
+  final _formKey = GlobalKey<FormState>();
+  static TextEditingController _emailController = TextEditingController();
+  static TextEditingController _passwordController = TextEditingController();
+  var userId;
+
+  @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          child: TextFormField(
-            cursorColor: theme.primaryColor,
-            style: GoogleFonts.poppins(
-              color: Colors.black54,
-            ),
-            keyboardType: TextInputType.emailAddress,
-            decoration: InputDecoration(
-              icon: Icon(
-                Icons.email,
-                color: theme.primaryColor,
-              ),
-              labelText: "Email ID",
-            ),
-          ),
-        ),
-        SizedBox(
-          height: height * 0.03,
-        ),
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          child: TextFormField(
-            cursorColor: theme.primaryColor,
-            style: GoogleFonts.poppins(
-              color: Colors.black54,
-            ),
-            keyboardType: TextInputType.visiblePassword,
-            obscureText: true,
-            decoration: InputDecoration(
-              icon: Icon(
-                Icons.lock,
-                color: theme.primaryColor,
-              ),
-              labelText: "Password",
-            ),
-          ),
-        ),
-        SizedBox(
-          height: height * 0.1,
-        ),
-        Container(
-          width: width * 0.8,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                theme.primaryColor,
-                theme.accentColor,
-              ],
-            ),
-            borderRadius: BorderRadius.circular(
-              10,
-            ),
-          ),
-          padding: EdgeInsets.all(10),
-          child: Center(
-            child: Text(
-              "Login",
+    return Form(
+      key: _formKey,
+      child: Column(
+        children: [
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: TextFormField(
+              controller: _emailController,
+              validator: (value) {
+                if (!value!.endsWith("@rejolut.com")) {
+                  return "Enter a valid email address";
+                } else {
+                  return null;
+                }
+              },
+              cursorColor: widget.theme.primaryColor,
               style: GoogleFonts.poppins(
-                color: Colors.white,
+                color: Colors.black54,
+              ),
+              keyboardType: TextInputType.emailAddress,
+              decoration: InputDecoration(
+                icon: Icon(
+                  Icons.email,
+                  color: widget.theme.primaryColor,
+                ),
+                labelText: "Email ID",
               ),
             ),
           ),
-        )
-      ],
+          SizedBox(
+            height: widget.height * 0.03,
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: TextFormField(
+              validator: (value) {
+                if (value!.length < 8) {
+                  return "Password must be of minimum 8 characters";
+                } else if (!emailValidatorRegExp.hasMatch(value)) {
+                  return "Password must contain atleast 1 uppercase, 1 lowercase, 1 number and 1 special character";
+                } else {
+                  return null;
+                }
+              },
+              controller: _passwordController,
+              cursorColor: widget.theme.primaryColor,
+              style: GoogleFonts.poppins(
+                color: Colors.black54,
+              ),
+              keyboardType: TextInputType.visiblePassword,
+              obscureText: true,
+              decoration: InputDecoration(
+                errorMaxLines: 2,
+                icon: Icon(
+                  Icons.lock,
+                  color: widget.theme.primaryColor,
+                ),
+                labelText: "Password",
+              ),
+            ),
+          ),
+          SizedBox(
+            height: widget.height * 0.1,
+          ),
+          GestureDetector(
+            onTap: () {
+              if (_formKey.currentState!.validate()) {
+                userId = (_emailController.text.substring(
+                  0,
+                  _emailController.text.indexOf("@"),
+                )).length;
+                print(userId);
+              }
+            },
+            child: Container(
+              width: widget.width * 0.8,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    widget.theme.primaryColor,
+                    widget.theme.accentColor,
+                  ],
+                ),
+                borderRadius: BorderRadius.circular(
+                  10,
+                ),
+              ),
+              padding: EdgeInsets.all(10),
+              child: Center(
+                child: Text(
+                  "Login",
+                  style: GoogleFonts.poppins(
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 }
