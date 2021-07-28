@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.rejolut_test_app">
+   <uses-permission android:name="android.permission.INTERNET"/>
    <application
         android:label="Rejolut"
         android:icon="@mipmap/ic_launcher">
