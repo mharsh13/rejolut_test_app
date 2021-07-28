@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:provider/provider.dart';
+import 'package:rejolut_test_app/Models/PhotoModel.dart';
+import 'package:rejolut_test_app/Providers/AlbumIdProvider.dart';
+import 'package:rejolut_test_app/Screens/Album/backend/fetchData.dart';
 
 class PhotosView extends StatefulWidget {
   const PhotosView({
@@ -11,6 +15,19 @@ class PhotosView extends StatefulWidget {
 }
 
 class _PhotosViewState extends State<PhotosView> {
+  late int albumId;
+  List<PhotoModel> photosList = [];
+
+  @override
+  void initState() {
+    albumId = Provider.of<AlbumIdProvider>(context, listen: false).albumId;
+    FetchData().fetchPhotos(albumId).then((value) {
+      photosList = value;
+      setState(() {});
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -18,7 +35,7 @@ class _PhotosViewState extends State<PhotosView> {
       child: StaggeredGridView.countBuilder(
         physics: AlwaysScrollableScrollPhysics(),
         crossAxisCount: 4,
-        itemCount: 5,
+        itemCount: photosList.length,
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () {},
@@ -26,7 +43,7 @@ class _PhotosViewState extends State<PhotosView> {
               borderRadius: BorderRadius.circular(10),
               child: Container(
                 child: Image.network(
-                  "https://i.picsum.photos/id/755/200/300.jpg?hmac=CfzLROBA3atEQnBKXK5SeavNo-1QRwZRwcqZwwdBMdM",
+                  photosList[index].thumbnail,
                 ),
               ),
             ),
